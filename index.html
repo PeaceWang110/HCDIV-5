@@ -7,19 +7,7 @@
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
-        .tooltip {
-            position: absolute;
-            background-color: white;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            padding: 10px;
-            font-size: 12px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            display: none;
-            pointer-events: none;
-            z-index: 10;
-        }
-
+        
         .brand-info-container {
             display: flex;
             justify-content: space-evenly;
@@ -58,19 +46,6 @@
             margin-top: 20px;
         }
 
-        .tooltip {
-            position: absolute;
-            background-color: rgba(0, 0, 0, 0.7);
-            color: #fff;
-            padding: 8px;
-            border-radius: 5px;
-            font-size: 14px;
-            white-space: nowrap;
-            pointer-events: none; 
-            display: none;
-            z-index: 1000;
-        }
-
         .car-images img {
             width: 200px; 
             margin: 10px; 
@@ -84,16 +59,16 @@
         }
 
         .description {
-            background: url('https://raw.githubusercontent.com/PeaceWang110/test/main/%E6%B1%BD%E8%BD%A6%E5%A4%A7%E5%85%A8/Cars.jpeg') no-repeat center center; /* 设置背景图片 */
-            background-size: cover; /* 图片按比例缩放，填满整个框 */
-            padding: 200px 20px; /* 上下左右内边距 */
-            color: #fff; /* 文字颜色为白色，确保与背景对比清晰 */
-            margin: 0; /* 去掉外边距 */
-            width: 100%; /* 让背景框延伸到页面两端 */
-            max-width: none; /* 移除最大宽度限制 */
-            text-align: center; /* 文本居中 */
-            border-radius: 0; /* 移除圆角 */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
+            background: url('https://raw.githubusercontent.com/PeaceWang110/test/main/%E6%B1%BD%E8%BD%A6%E5%A4%A7%E5%85%A8/Cars.jpeg') no-repeat center center;
+            background-size: cover;
+            padding: 200px 20px; 
+            color: #fff; 
+            margin: 0; 
+            width: 100%;
+            max-width: none; 
+            text-align: center; 
+            border-radius: 0; 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
         }
 
         .button-container {
@@ -153,8 +128,20 @@
             text-decoration: underline; 
         }
         .container {
-            max-width: 90%; /* 内容最大宽度占页面的90% */
-            margin: 0 auto; /* 水平居中 */
+            max-width: 90%; 
+            margin: 0 auto; 
+        }
+        .tooltip {
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 8px;
+            border-radius: 5px;
+            font-size: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            pointer-events: none;
+            display: none;
+            z-index: 1000;
         }
 
     </style>
@@ -408,17 +395,33 @@
             .attr("width", x11.bandwidth())
             .attr("height", d => height1 - y1(d3.sum(Object.values(d.models))))
             .attr("fill", d => color1(d.make))
+
+    .append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+
+            g1.selectAll("rect")
             .on("mouseover", (event, d) => {
                 const models = d.models;
                 const tooltipHtml = `<strong>${d.make} (${d.month})</strong><br>` +
-                    Object.entries(models).map(([model, count]) => `${model}: ${count}`).join("<br>");
+                    Object.entries(models)
+                        .map(([model, count]) => `${model}: ${count}`)
+                        .join("<br>");
 
-                tooltip1.transition().duration(200).style("opacity", .9);
+                tooltip1.transition().duration(200).style("opacity", 0.9);
                 tooltip1.html(tooltipHtml)
                     .style("left", (event.pageX + 10) + "px")
-                    .style("top", (event.pageY - 28) + "px");
+                    .style("top", (event.pageY - 28) + "px")
+                    .style("display", "block");  // 显示 tooltip
             })
-            .on("mouseout", () => tooltip1.transition().duration(500).style("opacity", 0));
+            .on("mousemove", (event) => {
+                tooltip1.style("left", (event.pageX + 10) + "px")
+                        .style("top", (event.pageY - 28) + "px");
+            })
+            .on("mouseout", () => {
+                tooltip1.transition().duration(500).style("opacity", 0);
+                tooltip1.style("display", "none");
+            });
 
         g1.append("g")
             .attr("transform", `translate(0,${height1})`)
@@ -521,7 +524,7 @@
     const carImages = document.getElementById(carImageContainers[index]);
 
     element.addEventListener('click', () => {
-
+  
         document.querySelectorAll('.car-images').forEach((img) => {
             img.style.display = 'none';
         });
