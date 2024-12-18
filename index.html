@@ -7,7 +7,7 @@
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
-        
+
         .brand-info-container {
             display: flex;
             justify-content: space-evenly;
@@ -59,12 +59,12 @@
         }
 
         .description {
-            background: url('https://raw.githubusercontent.com/PeaceWang110/test/main/%E6%B1%BD%E8%BD%A6%E5%A4%A7%E5%85%A8/Cars.jpeg') no-repeat center center;
-            background-size: cover;
+            background: url('https://raw.githubusercontent.com/PeaceWang110/test/main/%E6%B1%BD%E8%BD%A6%E5%A4%A7%E5%85%A8/Cars.jpeg') no-repeat center center; 
+            background-size: cover; 
             padding: 200px 20px; 
             color: #fff; 
-            margin: 0; 
-            width: 100%;
+            margin: 0;
+            width: 100%; 
             max-width: none; 
             text-align: center; 
             border-radius: 0; 
@@ -110,23 +110,23 @@
             margin-right: auto;
         }
         .footer {
-            text-align: center; 
-            padding: 10px; 
-            font-size: 14px; 
-            color: #666; 
-            background-color: #f9f9f9; 
-            margin-top: 20px; 
-            border-top: 1px solid #ddd; 
-        }
-
-        .footer a {
-            color: #007bff; 
-            text-decoration: none; 
-        }
-
-        .footer a:hover {
-            text-decoration: underline; 
-        }
+        position: fixed; 
+        bottom: 0; 
+        width: 100%; 
+        text-align: center; 
+        background-color: #f9f9f9; 
+        padding: 10px 0; 
+        font-size: 14px; 
+        color: #666;
+        border-top: 1px solid #ddd; 
+    }
+    .footer a {
+        color: #007bff; 
+        text-decoration: none; 
+    }
+    .footer a:hover {
+        text-decoration: underline; 
+    }
         .container {
             max-width: 90%; 
             margin: 0 auto; 
@@ -420,7 +420,7 @@
             })
             .on("mouseout", () => {
                 tooltip1.transition().duration(500).style("opacity", 0);
-                tooltip1.style("display", "none");
+                tooltip1.style("display", "none");  
             });
 
         g1.append("g")
@@ -524,10 +524,11 @@
     const carImages = document.getElementById(carImageContainers[index]);
 
     element.addEventListener('click', () => {
-  
+
         document.querySelectorAll('.car-images').forEach((img) => {
             img.style.display = 'none';
         });
+
 
         carImages.style.display = 'block';
     });
